@@ -4,11 +4,18 @@
 #include <vector>
 #include <tuple>
 #include <set>
+#include <string_view>
 #include "item.hpp"
+enum class CharacterClass {
+    Warrior,
+    Mage,
+    Archer,
+};
+
 class Character {
     private:
         std::string name;
-        std::string characterClass; // Warrior, Mage or Archer
+        CharacterClass characterClass; // Warrior, Mage or Archer
         int maxHP;
         int currentHP;
         int level;
@@ -19,11 +26,12 @@ class Character {
         std::vector<Item*> inventory;
         std::set<std::string> abilities;
     public:
-        Character(const std::string& name, const std::string& characterClass);
+        Character(const std::string& name, enum CharacterClass characterClass);
+        void setInitializationAttributes(int maxHP, int damage, int defense, const std::string& ability);
 
         // Getters
         const std::string& getName() const;
-        const std::string& getCharacterClass() const;
+        std::string_view getCharacterClass() const;
         int getMaxHP() const;
         int getCurrentHP() const;
         int getLevel() const;
@@ -67,6 +75,7 @@ class Character {
 
         // Other methods
         void display() const;
+        void levelUP() const;
 
 };
 
