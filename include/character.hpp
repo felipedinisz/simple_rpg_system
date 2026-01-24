@@ -4,6 +4,7 @@
 #include <vector>
 #include <tuple>
 #include <set>
+#include <memory>
 #include <string_view>
 #include "item.hpp"
 enum class CharacterClass {
@@ -23,10 +24,11 @@ class Character {
         int damage;
         int defense;
         std::tuple<int,int> position;
-        std::vector<Item*> inventory;
+        std::vector<std::unique_ptr<Item>> inventory;
         std::set<std::string> abilities;
     public:
         Character(const std::string& name, enum CharacterClass characterClass);
+        ~Character();
         void setInitializationAttributes(int maxHP, int damage, int defense, const std::string& ability);
 
         // Getters
@@ -39,7 +41,7 @@ class Character {
         int getDamage() const;
         int getDefense() const;
         std::tuple<int, int> getPosition() const;
-        const std::vector<Item*>& getInventory() const;
+        const std::vector<std::unique_ptr<Item>>& getInventory() const;
         const std::set<std::string>& getAbilities() const;
 
         // Setters 
@@ -53,10 +55,10 @@ class Character {
         void setDefense(int defense);        
 
         // Inventory methods
-        void addItem(Item* item);
+        void addItem(std::unique_ptr<Item> item);
         void removeItem(const std::string& itemName);
         void clearInventory();
-        const Item* getItem(int index) const;
+        Item* getItem(int index) const;
         int getInventorySize() const;
         void showInventory() const;
 
@@ -75,7 +77,7 @@ class Character {
 
         // Other methods
         void display() const;
-        void levelUP() const;
+        void levelUP();
 
 };
 

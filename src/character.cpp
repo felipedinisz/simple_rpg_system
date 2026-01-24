@@ -1,5 +1,6 @@
 #include "../include/character.hpp"
 #include "iostream"
+#include <vector>
 
 void Character::setInitializationAttributes(int maxHP, int damage, int defense, const std::string& ability) {
             this->maxHP = maxHP;
@@ -29,6 +30,8 @@ Character::Character(const std::string& name, enum CharacterClass characterClass
                 break;
         }
 }
+
+// <!--Getters-->
 
 const std::string& Character::getName() const {
     return this->name;
@@ -71,7 +74,7 @@ std::tuple<int, int> Character::getPosition() const {
     return this->position;
 }
 
-const std::vector<Item*>& Character::getInventory() const {
+const std::vector<std::unique_ptr<Item>>& Character::getInventory() const {
     return this->inventory;
 }
 
@@ -79,6 +82,7 @@ const std::set<std::string>& Character::getAbilities() const {
     return this->abilities;
 }
 
+// <!--Inventory Methods-->
 void Character::showInventory() const {
 
     if(this->inventory.empty()) {
@@ -86,9 +90,21 @@ void Character::showInventory() const {
         return;
     }
 
-    for(const Item* item : this->inventory) {
+    for(const std::unique_ptr<Item>& item : this->inventory) {
         if(item) {
             std::cout << item->getName() << "\n";
         }
     }
+}
+
+
+void Character::clearInventory() {
+    if(this->inventory.empty()) return;
+    
+    this->inventory.clear();
+    std::cout << "The inventory is now empty! \n";
+}
+
+Character::~Character() {
+    this->clearInventory();
 }
