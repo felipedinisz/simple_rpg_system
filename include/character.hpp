@@ -46,7 +46,7 @@ class Character {
 
         // Setters 
         void setName(const std::string& name);
-        void setCharacterClass(const std::string& characterClass);
+        void setCharacterClass(const CharacterClass& characterClass);
         void setMaxHP(int maxHP);
         void setCurrentHP(int currentHP);
         void setLevel(int level);
@@ -74,6 +74,8 @@ class Character {
         void moveSouth();
         void moveEast();
         void moveWest();
+        void getX();
+        void getY();
 
         // Other methods
         void display() const;

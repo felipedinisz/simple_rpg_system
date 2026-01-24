@@ -20,7 +20,7 @@ Character::Character(const std::string& name, enum CharacterClass characterClass
     characterClass(characterClass) {
         switch (characterClass) {
             case CharacterClass::Warrior:
-                setInitializationAttributes(150, 20, 50, "Powerful fist");
+                setInitializationAttributes(150, 20, 50, "Legendary blade");
                 break;
             case CharacterClass::Mage:
                 setInitializationAttributes(75, 50, 25, "Fireball");
@@ -31,7 +31,7 @@ Character::Character(const std::string& name, enum CharacterClass characterClass
         }
 }
 
-// <!--Getters-->
+// <! -- Getters -- >
 
 const std::string& Character::getName() const {
     return this->name;
@@ -42,7 +42,6 @@ std::string_view Character::getCharacterClass() const {
         case CharacterClass::Mage: return "Mage";
         case CharacterClass::Archer: return "Archer";
     }
-
     return "Unknown";
 }
 
@@ -81,8 +80,40 @@ const std::vector<std::unique_ptr<Item>>& Character::getInventory() const {
 const std::set<std::string>& Character::getAbilities() const {
     return this->abilities;
 }
+// <! -- Setters -- >
+void Character::setName(const std::string& name) {
+    this->name = name;
+}
 
-// <!--Inventory Methods-->
+void Character::setCharacterClass(const CharacterClass& characterClass) {
+    this->characterClass = characterClass;
+}
+
+void Character::setMaxHP(int maxHP) {
+    this->maxHP = maxHP;
+}
+
+void Character::setCurrentHP(int currentHP) {
+    this->currentHP = currentHP;
+}
+
+void Character::setLevel(int level) {
+    this->level = level;
+}
+
+void Character::setXP(int XP) {
+    this->XP = XP;
+}
+
+void Character::setDamage(int damage) {
+    this->damage = damage;
+}
+
+void Character::setDefense(int defense) {
+    this->defense = defense;
+}
+
+// <! -- Inventory Methods -- >
 void Character::showInventory() const {
 
     if(this->inventory.empty()) {
