@@ -101,16 +101,14 @@ void showPartyMembers(std::vector<std::unique_ptr<Character>>& party) {
 void showCharacterStats(std::string& name, std::vector<std::unique_ptr<Character>>& party) {
     for(const std::unique_ptr<Character>&  character : party) {
 
-        if(name != character->getName()) {
-            std::cout << "This party member doesn't exist.\n";
-            return;
-        }
-
         if(name == character->getName()) {
             character->display();
             return;
         }
     }
+
+    std::cout << "This party member doesn't exist.\n";
+    return;
 }
 
 bool partyHasMember(const std::vector<std::unique_ptr<Character>>& party) {
@@ -136,13 +134,12 @@ bool characterIsAlreadyInParty(std::string& name, std::vector<std::unique_ptr<Ch
 }
 
 void removeMemberFromTheParty(const std::string& name, std::vector<std::unique_ptr<Character>>& party) {
-            auto it = std::find_if(
+        auto it = std::find_if(
             party.begin(), party.end(),
             [&](const std::unique_ptr<Character>& c) {
                 return name == c->getName();
             }
         );
-
         if (it != party.end()) {
             std::cout << (*it)->getName() << ", the "
                     << (*it)->getCharacterClass()
@@ -152,10 +149,6 @@ void removeMemberFromTheParty(const std::string& name, std::vector<std::unique_p
         } else {
             std::cout << "Character not found.\n";
         }
-
-        std::erase_if(party, [&](const std::unique_ptr<Character>& c){
-            return name == c->getName();
-        });
 }
 
 
