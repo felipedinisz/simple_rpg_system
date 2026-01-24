@@ -114,6 +114,14 @@ void Character::setDefense(int defense) {
 }
 
 // <! -- Inventory Methods -- >
+/*
+        void addItem(std::unique_ptr<Item> item);
+        void removeItem(const std::string& itemName);
+        Item* getItem(int index) const;
+        int getInventorySize() const;
+*/
+
+
 void Character::showInventory() const {
 
     if(this->inventory.empty()) {
@@ -135,8 +143,27 @@ void Character::clearInventory() {
     this->inventory.clear();
     std::cout << "The inventory is now empty! \n";
 }
+// < ! -- Abilities methods -- >
+/*
+        bool hasAbility(const std::string& ability) const;
+        void showAbilities() const;
+        bool learnAbility(const std::string& ability); 
+        int getAbilitiesCount() const;
+*/
+
+// < ! -- Position methods -- >
+/*        void move(int deltaX, int deltaY);
+        void moveNorth();
+        void moveSouth();
+        void moveEast();
+        void moveWest();
+        void getX();
+        void getY();*/
+
 
 // <! -- Other Methods -- >
+
+//         void levelUP();
 void Character::display() const {
     std::cout << "================================" << "\n";
     std::cout << this->getName() << "'s stats:" "\n";
