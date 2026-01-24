@@ -1,14 +1,14 @@
 #include <iostream>
-#include <limits>
+
 #include <memory>
 #include <string>
 #include <algorithm>
+#include <vector>
 // #include "../include/item.hpp"
 #include "../include/character.hpp"
 
 std::string readName() {
     std::string name;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "Enter the character's name: ";
     std::getline(std::cin, name);
     return name;
@@ -20,8 +20,8 @@ void printMenu() {
     std::cout << "========================================\n";
     std::cout << " 1. Create a new character\n";
     std::cout << " 2. Display character stats\n";
-    std::cout << " 3. \n";
-    std::cout << " 4. \n";
+    std::cout << " 3. Show party members\n";
+    std::cout << " 4. Remove member from the party\n";
     std::cout << " 5. \n";
     std::cout << " 6. \n";
     std::cout << " 7. \n";
@@ -33,7 +33,8 @@ void printMenu() {
 
 void enterToContinue() {
     std::cout << "Press enter to continue...";
-    std::cin.get();
+    std::string _;
+    std::getline(std::cin, _);
 }
 
 
@@ -57,18 +58,22 @@ bool nameValidation(const std::string& name) {
 }
 
 std::unique_ptr<Character> createCharacter(const std::string& name) {
-    std::cout << "Choose your character class: \n";
-    std::cout << "1 - Warrior \n";
-    std::cout << "2 - Mage \n";
-    std::cout << "3 - Archer \n";
 
-    int option;
 
     while(true) {
-        if (!(std::cin >> option)) {
+        std::string line;
+        std::cout << "Choose your character class: \n";
+        std::cout << "1 - Warrior \n";
+        std::cout << "2 - Mage \n";
+        std::cout << "3 - Archer \n";
+        std::getline(std::cin, line);
+
+        int option;
+        try {
+            option = std::stoi(line);
+        } catch (...) {
             std::cout << "Invalid input. Please enter a number.\n";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            enterToContinue();
             continue;
         }
 
@@ -81,6 +86,7 @@ std::unique_ptr<Character> createCharacter(const std::string& name) {
                 return std::make_unique<Character>(name, CharacterClass::Archer);
             default:
                 std::cout << "Invalid Option. Try again.\n";
+                enterToContinue();
         }   
     }
 }
@@ -129,20 +135,52 @@ bool characterIsAlreadyInParty(std::string& name, std::vector<std::unique_ptr<Ch
     return false;
 }
 
+void removeMemberFromTheParty(const std::string& name, std::vector<std::unique_ptr<Character>>& party) {
+            auto it = std::find_if(
+            party.begin(), party.end(),
+            [&](const std::unique_ptr<Character>& c) {
+                return name == c->getName();
+            }
+        );
+
+        if (it != party.end()) {
+            std::cout << (*it)->getName() << ", the "
+                    << (*it)->getCharacterClass()
+                    << " is banned from the party.\n";
+
+            party.erase(it);
+        } else {
+            std::cout << "Character not found.\n";
+        }
+
+        std::erase_if(party, [&](const std::unique_ptr<Character>& c){
+            return name == c->getName();
+        });
+}
+
 
 int main() {
     std::vector<std::unique_ptr<Character>> party;
     
-
+    
      do {
+
+        std::string line;
+        printMenu();
+        std::getline(std::cin, line);
+
+        if (line.empty()) {
+            std::cout << "Please, choose an option.\n";
+            enterToContinue();
+            continue; 
+        }
+
         int option;
 
-        printMenu();
-
-        if (!(std::cin >> option)) {
+        try {
+            option = std::stoi(line);
+        } catch (...) {
             std::cout << "Invalid input. Please enter a number.\n";
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
         }
 
@@ -167,10 +205,17 @@ int main() {
                 break;
             }
             case 3: {
+                if(!partyHasMember(party)) break; 
+                showPartyMembers(party);
                 enterToContinue();
                 break;
             }
             case 4: {
+                if(!partyHasMember(party)) break;
+                showPartyMembers(party);
+                std::string name = readName();
+                if(!nameValidation(name)) break;
+                removeMemberFromTheParty(name, party);
                 enterToContinue();
                 break;
             }
