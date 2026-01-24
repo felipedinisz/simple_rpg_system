@@ -105,6 +105,21 @@ void Character::clearInventory() {
     std::cout << "The inventory is now empty! \n";
 }
 
+// <! -- Other Methods -- >
+void Character::display() const {
+    std::cout << "================================" << "\n";
+    std::cout << this->getName() << "'s stats:" "\n";
+    std::cout << "Combat class: " << this->getCharacterClass() << "\n";
+    std::cout << "Health: " << this->getCurrentHP() << "/" << this->getMaxHP() << "\n";
+    std::cout << "Level: " << this->getLevel() << "\n";
+    std::cout << "Experience: " << this->getXP() << "\n";
+    std::cout << "Damage: " << this->getDamage() << "\n";
+    std::cout << "Defense: " << this->getDefense() << "\n";
+    this->showInventory();
+    std::cout << "================================" << "\n";
+}
+
+
 Character::~Character() {
     this->clearInventory();
 }
