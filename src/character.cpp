@@ -1,5 +1,7 @@
 #include "../include/character.hpp"
-#include "iostream"
+#include <iostream>
+#include <memory>
+#include <algorithm>
 #include <vector>
 
 void Character::setInitializationAttributes(int maxHP, int damage, int defense, const std::string& ability) {
@@ -115,12 +117,41 @@ void Character::setDefense(int defense) {
 
 // <! -- Inventory Methods -- >
 /*
-        void addItem(std::unique_ptr<Item> item);
-        void removeItem(const std::string& itemName);
-        Item* getItem(int index) const;
+        
+
         int getInventorySize() const;
 */
 
+void Character::addItem(std::unique_ptr<Item> item) {
+    this->inventory.push_back(std::move(item));
+}
+
+void Character::removeItem(const std::string& itemName) {
+     auto it = std::find_if(
+            this->inventory.begin(), this->inventory.end(),
+            [&](const std::unique_ptr<Item>& item) {
+                return itemName == item->getName();
+            }
+        );
+        if (it != this->inventory.end()) {
+            std::cout << (*it)->getName() << " is removed from the inventory.\n";
+
+            this->inventory.erase(it);
+        } else {
+            std::cout << "Item not found.\n";
+        }
+}
+
+Item* Character::getItem(std::size_t index) const{
+    if (index < this->inventory.size()) {
+        return this->inventory[index].get();
+    }
+    return nullptr;
+}
+
+std::size_t Character::getInventorySize() const{
+    return this->inventory.size();
+}
 
 void Character::showInventory() const {
 

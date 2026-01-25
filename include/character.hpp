@@ -57,10 +57,10 @@ class Character {
         // Inventory methods
         void addItem(std::unique_ptr<Item> item);
         void removeItem(const std::string& itemName);
-        void clearInventory();
-        Item* getItem(int index) const;
-        int getInventorySize() const;
+        Item* getItem(std::size_t index) const;
+        std::size_t getInventorySize() const;
         void showInventory() const;
+        void clearInventory();
 
         // Abilities methods
         bool hasAbility(const std::string& ability) const;
