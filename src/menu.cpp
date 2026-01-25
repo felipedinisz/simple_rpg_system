@@ -1,7 +1,7 @@
 #include "../include/menu.hpp"
 #include <iostream>
 #include <algorithm>
-
+// <! -- Menu Design and validation -- >
 std::string readName() {
     std::string name;
     std::cout << "Enter the character's name: ";
@@ -73,7 +73,7 @@ bool characterIsAlreadyInParty(std::string& name, std::vector<std::unique_ptr<Ch
 
     return false;
 }
-
+// <! -- Menu Actions -- >
 std::unique_ptr<Character> createCharacter(const std::string& name) {
 
 
@@ -147,7 +147,7 @@ void removeMemberFromTheParty(const std::string& name, std::vector<std::unique_p
             std::cout << "Character not found.\n";
         }
 }
-
+// <! -- Handlers -- >
 void handleCreateCharacter(std::vector<std::unique_ptr<Character>>& party) {
     std::string name = readName();
     if(!nameValidation(name)) return;

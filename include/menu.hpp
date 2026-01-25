@@ -2,11 +2,10 @@
 #define MENU_HPP
 #include <memory>
 #include <string>
-
 #include <vector>
-
 // #include "../include/item.hpp"
 #include "../include/character.hpp"
+
 // <! -- Menu Design and validation -- >
 std::string readName();
 void printMenu();
