@@ -116,11 +116,6 @@ void Character::setDefense(int defense) {
 }
 
 // <! -- Inventory Methods -- >
-/*
-        
-
-        int getInventorySize() const;
-*/
 
 void Character::addItem(std::unique_ptr<Item> item) {
     this->inventory.push_back(std::move(item));
@@ -179,11 +174,11 @@ void Character::clearInventory() {
         bool hasAbility(const std::string& ability) const;
         void showAbilities() const;
         bool learnAbility(const std::string& ability); 
-        int getAbilitiesCount() const;
+        std::size_t getAbilitiesCount() const;
 */
 
 // < ! -- Position methods -- >
-/*        void move(int deltaX, int deltaY);
+/*       void move(int deltaX, int deltaY);
         void moveNorth();
         void moveSouth();
         void moveEast();

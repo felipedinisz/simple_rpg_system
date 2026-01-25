@@ -66,7 +66,7 @@ class Character {
         bool hasAbility(const std::string& ability) const;
         void showAbilities() const;
         bool learnAbility(const std::string& ability); 
-        int getAbilitiesCount() const;
+        std::size_t getAbilitiesCount() const;
 
         //Position methods 
         void move(int deltaX, int deltaY);

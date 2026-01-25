@@ -10,14 +10,14 @@ std::string readName() {
 }
 
 void printMenu() {
-        std::cout << "\n========================================\n";
+    std::cout << "\n========================================\n";
     std::cout << "        JUST A BASIC RPG GAME        \n";
     std::cout << "========================================\n";
     std::cout << " 1. Create a new character\n";
     std::cout << " 2. Display character stats\n";
     std::cout << " 3. Show party members\n";
     std::cout << " 4. Remove member from the party\n";
-    std::cout << " 5. \n";
+    std::cout << " 5. Inventory Menu\n";
     std::cout << " 6. \n";
     std::cout << " 7. \n";
     std::cout << " 8. \n";
@@ -62,7 +62,7 @@ bool partyHasMember(const std::vector<std::unique_ptr<Character>>& party) {
     return true;
 }
 
-bool characterIsAlreadyInParty(std::string& name, std::vector<std::unique_ptr<Character>>& party) {
+bool characterIsAlreadyInParty(const std::string& name, const std::vector<std::unique_ptr<Character>>& party) {
     for(const std::unique_ptr<Character>&  character : party) {
         if(name == character->getName()) {
             std::cout << "Character already exists. \n";
@@ -75,8 +75,6 @@ bool characterIsAlreadyInParty(std::string& name, std::vector<std::unique_ptr<Ch
 }
 // <! -- Menu Actions -- >
 std::unique_ptr<Character> createCharacter(const std::string& name) {
-
-
     while(true) {
         std::string line;
         std::cout << "Choose your character class: \n";
@@ -108,14 +106,14 @@ std::unique_ptr<Character> createCharacter(const std::string& name) {
     }
 }
 
-void showPartyMembers(std::vector<std::unique_ptr<Character>>& party) {
+void showPartyMembers(const std::vector<std::unique_ptr<Character>>& party) {
     std::cout << "Party Members:\n";
     for(const std::unique_ptr<Character>&  character : party) {
         std::cout << character->getName() << " (" << character->getCharacterClass() << ")\n";
     }
 }
 
-void showCharacterStats(std::string& name, std::vector<std::unique_ptr<Character>>& party) {
+void showCharacterStats(const std::string& name, const std::vector<std::unique_ptr<Character>>& party) {
     for(const std::unique_ptr<Character>&  character : party) {
 
         if(name == character->getName()) {
@@ -158,7 +156,7 @@ void handleCreateCharacter(std::vector<std::unique_ptr<Character>>& party) {
     enterToContinue();
 }
 
-void handleShowCharacterStats(std::vector<std::unique_ptr<Character>>& party){
+void handleShowCharacterStats(const std::vector<std::unique_ptr<Character>>& party){
     if(!partyHasMember(party)) return; 
     showPartyMembers(party);
     std::string name = readName();
@@ -167,7 +165,7 @@ void handleShowCharacterStats(std::vector<std::unique_ptr<Character>>& party){
     enterToContinue();
 }
 
-void handleShowPartyMembers(std::vector<std::unique_ptr<Character>>& party) {
+void handleShowPartyMembers(const std::vector<std::unique_ptr<Character>>& party) {
     if(!partyHasMember(party)) return; 
     showPartyMembers(party);
     enterToContinue();
