@@ -44,6 +44,7 @@ int main() {
                 break;
             }
             case 5: {
+                handleInventoryOptions(party);
                 enterToContinue();
                 break;
             }
@@ -68,6 +69,4 @@ int main() {
                 break;
         }
     } while(true);
-
-    return 0;
 }
