@@ -59,6 +59,8 @@ class Character {
         void removeItem(const std::string& itemName);
         Item* getItem(std::size_t index) const;
         std::size_t getInventorySize() const;
+        bool isTheInventoryEmpty() const;
+        void removeItemAt(std::size_t index);
         void showInventory() const;
         void clearInventory();
 

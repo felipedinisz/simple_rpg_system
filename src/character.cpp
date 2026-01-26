@@ -169,6 +169,18 @@ void Character::clearInventory() {
     this->inventory.clear();
     std::cout << "The inventory is now empty! \n";
 }
+
+bool Character::isTheInventoryEmpty() const {
+    if(this->inventory.empty()) return true;
+    return false;
+}
+
+void Character::removeItemAt(std::size_t index) {
+    if (index < inventory.size()) {
+        inventory.erase(inventory.begin() + index);
+    }
+}
+
 // < ! -- Abilities methods -- >
 /*
         bool hasAbility(const std::string& ability) const;
