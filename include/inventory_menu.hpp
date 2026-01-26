@@ -1,4 +1,7 @@
-#ifndef INVENTORY_HPP
-#define INVENTORY_HPP
+#ifndef INVENTORY_MENU_HPP
+#define INVENTORY_MENU_HPP
+#include "../include/character.hpp"
 
-#endif // INVENTORY_HPP
+void showInventoryWithIndex(const Character& character);
+void removeAnItemMenuOption(Character* character);
+#endif
