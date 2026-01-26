@@ -1,7 +1,15 @@
 #include "../include/menu.hpp"
 #include <iostream>
 #include <algorithm>
+#include <memory>
 // <! -- Menu Design and validation -- >
+
+void enterToContinue() {
+    std::cout << "Press enter to continue...";
+    std::string _;
+    std::getline(std::cin, _);
+}
+
 std::string readName() {
     std::string name;
     std::cout << "Enter the character's name: ";
@@ -26,12 +34,28 @@ void printMenu() {
     std::cout << "Please, choose an option: ";
 }
 
-void enterToContinue() {
-    std::cout << "Press enter to continue...";
-    std::string _;
-    std::getline(std::cin, _);
+void printInventoryMenu() {
+    std::cout << "\n========================================\n";
+    std::cout << "        Inventory Menu        \n";
+    std::cout << "========================================\n";
+    std::cout << " 1. Use an Item\n";
+    std::cout << " 2. Remove an Item\n";
+    std::cout << " 3. Show Inventory\n";
+    std::cout << " 4. Clear Inventory\n";
+    std::cout << " 5. Return to the main menu\n";
+    std::cout << "========================================\n";
+    std::cout << "Please, choose an option: ";
 }
 
+Character* returnCharacterByName(const std::string& name, const std::vector<std::unique_ptr<Character>>& party) {
+    for(const std::unique_ptr<Character>&  character : party) {
+        if(name == character->getName()) {
+            return character.get();
+        }
+    }
+
+    return nullptr;
+}
 
 bool nameValidation(const std::string& name) {
     
@@ -145,6 +169,8 @@ void removeMemberFromTheParty(const std::string& name, std::vector<std::unique_p
             std::cout << "Character not found.\n";
         }
 }
+
+
 // <! -- Handlers -- >
 void handleCreateCharacter(std::vector<std::unique_ptr<Character>>& party) {
     std::string name = readName();
@@ -153,7 +179,6 @@ void handleCreateCharacter(std::vector<std::unique_ptr<Character>>& party) {
     std::unique_ptr<Character> character = createCharacter(name);
     party.push_back(std::move(character));
     std::cout << "Character created successfully!\n";
-    enterToContinue();
 }
 
 void handleShowCharacterStats(const std::vector<std::unique_ptr<Character>>& party){
@@ -162,13 +187,11 @@ void handleShowCharacterStats(const std::vector<std::unique_ptr<Character>>& par
     std::string name = readName();
     if(!nameValidation(name)) return;
     showCharacterStats(name, party);
-    enterToContinue();
 }
 
 void handleShowPartyMembers(const std::vector<std::unique_ptr<Character>>& party) {
     if(!partyHasMember(party)) return; 
     showPartyMembers(party);
-    enterToContinue();
 }
 
 void handleRemoveMemberFromTheParty(std::vector<std::unique_ptr<Character>>& party) {
@@ -177,5 +200,59 @@ void handleRemoveMemberFromTheParty(std::vector<std::unique_ptr<Character>>& par
     std::string name = readName();
     if(!nameValidation(name)) return;
     removeMemberFromTheParty(name, party);
-    enterToContinue();
+}
+
+void handleInventoryOptions(const std::vector<std::unique_ptr<Character>>& party) {
+    if(!partyHasMember(party)) return;
+    showPartyMembers(party);
+    std::string name = readName();
+    if(!nameValidation(name)) return;
+    Character* character = returnCharacterByName(name, party);
+    if(!character) {
+        std::cout << "Character not found.\n";
+        enterToContinue();
+        return;
+    }
+
+      do {
+        std::string line;
+        printInventoryMenu();
+        std::getline(std::cin, line);
+
+        if (line.empty()) {
+            std::cout << "Please, choose an option.\n";
+            enterToContinue();
+            continue; 
+        }
+
+        int option;
+
+        try {
+            option = std::stoi(line);
+        } catch (...) {
+            std::cout << "Invalid input. Please enter a number.\n";
+            enterToContinue();
+            continue;
+        }
+
+        switch (option) {
+            case 1: {
+                std::cout << "Not implemented yet.\n";
+                break;
+            }
+            case 2: {
+                removeAnItemMenuOption(character);
+                break;
+            }
+            case 3: {
+                break;
+            }
+            case 4: {
+                break;
+            }
+            case 5: {
+                return;
+            }
+        }
+    } while(true);
 }
