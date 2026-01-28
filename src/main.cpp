@@ -45,19 +45,15 @@ int main() {
             }
             case 5: {
                 handleInventoryOptions(party);
-                enterToContinue();
                 break;
             }
             case 6: {
-                enterToContinue();
                 break;
             }
             case 7: {
-                enterToContinue();
                 break;
             }
             case 8: {
-                enterToContinue();
                 break;
             }
             case 9: 

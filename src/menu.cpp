@@ -1,4 +1,5 @@
 #include "../include/menu.hpp"
+#include "../include/inventory_menu.hpp"
 #include <iostream>
 #include <algorithm>
 #include <memory>
@@ -34,18 +35,6 @@ void printMenu() {
     std::cout << "Please, choose an option: ";
 }
 
-void printInventoryMenu() {
-    std::cout << "\n========================================\n";
-    std::cout << "        Inventory Menu        \n";
-    std::cout << "========================================\n";
-    std::cout << " 1. Use an Item\n";
-    std::cout << " 2. Remove an Item\n";
-    std::cout << " 3. Show Inventory\n";
-    std::cout << " 4. Clear Inventory\n";
-    std::cout << " 5. Return to the main menu\n";
-    std::cout << "========================================\n";
-    std::cout << "Please, choose an option: ";
-}
 
 Character* returnCharacterByName(const std::string& name, const std::vector<std::unique_ptr<Character>>& party) {
     for(const std::unique_ptr<Character>&  character : party) {
@@ -61,6 +50,7 @@ bool nameValidation(const std::string& name) {
     
     if(name.length() == 0) {
         std::cout << "You should enter an non-empty name. \n";
+        enterToContinue();
         return false;
     }
     bool onlySpaces = std::all_of(
@@ -70,6 +60,7 @@ bool nameValidation(const std::string& name) {
 
     if(onlySpaces) {
         std::cout << "You should enter a proper name. Name cannot contain only spaces. \n";
+        enterToContinue();
         return false;
     }   
 
@@ -142,11 +133,13 @@ void showCharacterStats(const std::string& name, const std::vector<std::unique_p
 
         if(name == character->getName()) {
             character->display();
+            enterToContinue();
             return;
         }
     }
 
     std::cout << "This party member doesn't exist.\n";
+    enterToContinue();
     return;
 }
 
@@ -179,6 +172,7 @@ void handleCreateCharacter(std::vector<std::unique_ptr<Character>>& party) {
     std::unique_ptr<Character> character = createCharacter(name);
     party.push_back(std::move(character));
     std::cout << "Character created successfully!\n";
+    enterToContinue();
 }
 
 void handleShowCharacterStats(const std::vector<std::unique_ptr<Character>>& party){
@@ -192,6 +186,7 @@ void handleShowCharacterStats(const std::vector<std::unique_ptr<Character>>& par
 void handleShowPartyMembers(const std::vector<std::unique_ptr<Character>>& party) {
     if(!partyHasMember(party)) return; 
     showPartyMembers(party);
+    enterToContinue();
 }
 
 void handleRemoveMemberFromTheParty(std::vector<std::unique_ptr<Character>>& party) {
@@ -200,6 +195,7 @@ void handleRemoveMemberFromTheParty(std::vector<std::unique_ptr<Character>>& par
     std::string name = readName();
     if(!nameValidation(name)) return;
     removeMemberFromTheParty(name, party);
+    enterToContinue();
 }
 
 void handleInventoryOptions(const std::vector<std::unique_ptr<Character>>& party) {
@@ -208,6 +204,7 @@ void handleInventoryOptions(const std::vector<std::unique_ptr<Character>>& party
     std::string name = readName();
     if(!nameValidation(name)) return;
     Character* character = returnCharacterByName(name, party);
+
     if(!character) {
         std::cout << "Character not found.\n";
         enterToContinue();
@@ -238,6 +235,7 @@ void handleInventoryOptions(const std::vector<std::unique_ptr<Character>>& party
         switch (option) {
             case 1: {
                 std::cout << "Not implemented yet.\n";
+                enterToContinue();
                 break;
             }
             case 2: {
@@ -245,9 +243,11 @@ void handleInventoryOptions(const std::vector<std::unique_ptr<Character>>& party
                 break;
             }
             case 3: {
+                enterToContinue();
                 break;
             }
             case 4: {
+                enterToContinue();
                 break;
             }
             case 5: {

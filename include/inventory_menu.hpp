@@ -4,4 +4,5 @@
 
 void showInventoryWithIndex(const Character& character);
 void removeAnItemMenuOption(Character* character);
+void printInventoryMenu();
 #endif
